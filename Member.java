@@ -3,7 +3,7 @@
  * This class creates a Member object that has characteristics read from the text file.
  * There are also numerous classes that will help exchange these information between
  * classes by using these characteristics.
- * @author sk8er
+ * @author Colin
  *
  */
 
