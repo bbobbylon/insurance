@@ -67,6 +67,7 @@ public class Insurance {
 			System.out.print("\nPlease enter your choice: ");
 			choice= sc.nextInt();
 			if (choice == 1) {
+				System.out.println("Here are the members: \n");
 				for (Member mem: members) {
 					Member.getMembersAsString(mem);
 				}
