@@ -1,6 +1,7 @@
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.beans.XMLDecoder;
 
 /**
  * This class will eventually read the members from a text file, a binary file, and an xml file.
@@ -48,5 +49,39 @@ public class MemberReader {
         }
     }
 	
+	/**
+	 * This function takes in the file name and reads the members from a binary file
+	 * @author Colin
+	 * @param fname
+	 * @return result An array list of the members
+	 */
+	public static ArrayList<Member> readMembersFromBinary(String fname) {
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fname));
+			ArrayList<Member> result = (ArrayList<Member>)ois.readObject();
+			ois.close();
+			return result;
+		} catch (Exception ex) {
+			return null;
+		}
+	}
 	
+	/**
+	 * This function takes in the file name and reads the members from an XML file
+	 * @author Colin
+	 * @param fname
+	 * @return readMembers An array list of the members
+	 */
+	public static ArrayList<Member> readMembersfromXML(String fname) {
+		try {
+			ArrayList<Member> readMembers = new ArrayList<Member>();
+			XMLDecoder xmlDec = new XMLDecoder(new BufferedInputStream(new FileInputStream("students.xml")));
+			readMembers = (ArrayList<Member>)xmlDec.readObject();
+			xmlDec.close();
+			return readMembers;
+		}
+		catch (Exception ex) {
+			return null;
+		}
+	}
 }
