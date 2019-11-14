@@ -35,12 +35,14 @@ public class MemberWriter {
 	             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new
 	                         File(fname))));
 	             JSONArray array = new JSONArray();
-	             JSONObject stuObj;
+	             JSONObject memObj;
 	             for (Member mem : members) {
-	                 stuObj = new JSONObject();
-	                 stuObj.put("name",mem.getName());
-	                 stuObj.put("grades",mem.getGradesAsString());
-	                 array.add(stuObj);
+	                 memObj = new JSONObject();
+	                 String name= mem.getFirstname() + " " + mem.getLastname();
+	                 memObj.put("Name: ", name);
+	                 memObj.put("Score", mem.getScore());
+	                 memObj.put("Verdict", mem.getVerdict());
+	                 array.add(memObj);
 	             }
 	             JSONObject allMembers = new JSONObject();
 	             allMembers.put("members",array);
