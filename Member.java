@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Member {
 	private String firstname;
-	private static String lastname;
+	private String lastname;
 	private int age;
 	private int height;
 	private int weight;
