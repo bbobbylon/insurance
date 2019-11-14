@@ -4,17 +4,18 @@ import java.util.ArrayList;
  * @author bobby
  *This class is used for the calculations behind assessing a member(new or old)
  *It has a class for each parameter that is considered when scoring a member:
- *age, bmi, blood pressure, and family disease. There are also two classes that
- *calculate bmi and blood pressure using a simple conversion formula (since we are
- *converting from lbs to kgs and height in ft to height in m.
+ *age, BMI, blood pressure, and family disease. There are also two classes that
+ *calculate BMI and blood pressure using a simple conversion formula (since we are
+ *converting from LBS to KGS and height in FT to height in M.
  */
 
 public class Assessor
 {
 	
 /**
- * This method simply returns an int depending on the member's age
- * @param age is an int that compared to 30, 45, or 60, and they 
+ * @name ageScore
+ * This method simply returns an INT depending on the member's age
+ * @param age is an INT that compared to 30, 45, or 60, and they 
  * respectfully return a score to be added with all the other scores to find
  * an insurance rate.
  * @return 0, 10, 20, or 30. These are points that will be added to the total score,
@@ -42,10 +43,11 @@ public int ageScore(int age)
 	}
 
 /**
- * This method does the actual calculations and conversions from lb to kg and ft to m.
+ * @name calcBmiScore
+ * This method does the actual calculations and conversions from LB to KG and FT to M.
  * @param height is an integer that is divided by 39.37 to convert to meters.
- * @param weight is an integer that is divided by 2.205 to convert to kgs.
- * @return bmi, which is weight divided by height squared. This determines a score
+ * @param weight is an integer that is divided by 2.205 to convert to KGS.
+ * @return BMI, which is weight divided by height squared. This determines a score
  * range for a member and is added to the total score, which gives a member an
  * insurance rate based on their total score.
  */
@@ -63,33 +65,41 @@ public double calcBmiScore(int height, int weight)
 }
 
 /**
- * This method takes in a string called bmi and returs an int.
- * @param bmi this parameter is used as a string because of the given text file
- * @return
+ * @name bmiScore
+ * This method takes in a string called BMI and returns an INT.
+ * @param bmi this parameter is used as a double because of the given text file
+ * @return 0, 30 or 75. These points will be added to the total score, which 
+ * gives a member a proposed insurance rate.
  */
 
-public int bmiScore(String bmi)
+public int bmiScore(double bmi)
 {
-	if (bmi.contentEquals("normal"))
+	if (bmi>=18.5 && bmi <=24.9)
 	{
 		return 0;
 	}
-	else if (bmi.contentEquals("overweight"))
+	else if (bmi >=25.0 && bmi <= 29.9)
 	{
 		return 30;
 	}
-	else
+	else if (bmi>= 30.0 &&bmi <= 34.9)
 	{
 		return 75;
 	}
+	else 
+		return 0;
 }
 
 /**
- * 
- * @param BPSys
- * @param BPDias
- * @return
+ * @name calcBloodPressure
+ * This method is for calculating Blood pressure
+ * @param BPSys is an INT and it represents a members systolic Blood Pressure
+ * @param BPDias is an INT and it represents a members diastolic Blood Pressure
+ * @return normal, elevated, stage1, stage2, crisis. These strings are going to be
+ * input into the bloodPressure method, which returns a score to be added to the total score,
+ * which is used in finding a member's proposed insurance rate.
  */
+
 public String calcBloodPressure(int BPSys, int BPDias)
 {
 	if (120<=BPSys && 80<= BPDias)
@@ -115,7 +125,18 @@ public String calcBloodPressure(int BPSys, int BPDias)
 	else
 		return null;
 }
-public int bloodPressureScore(String score, int BPSys, int BPDias)
+
+/**
+ * @name bloodPressureScore
+ * This method gives points to be added to a total score.
+ * @param BPSys is an INT and it is used in the calcBloodPressure to find the range of a member's
+ * systolic blood pressure
+ * @param BPDias is and INT and functions just like BPSys, instead for diastolic blood pressure.
+ * @return 0, 15, 30, 75, and 100. These INTS will be added to a total score, which gives
+ * a member their proposed insurance rate.
+ */
+
+public int bloodPressureScore(int BPSys, int BPDias)
 {
 	if (calcBloodPressure(BPSys, BPDias).equals("normal"))
 	{
@@ -133,26 +154,26 @@ public int bloodPressureScore(String score, int BPSys, int BPDias)
 	{
 		return 75;
 	}
-	else 
+	else if (calcBloodPressure(BPSys, BPDias).equals("crisis"))
 	{
 		return 100;
 	}
+	else 
+		return 0;
 	
 }
 
-/**
- * 
- * @param disease
- * @return
+/** 
+ * @name familyDiseaseScore
+ * This method gives points based on family history.
+ * @param disease is a string and a score is returned based on the type of disease.
+ * @return an INT, (all 10 points) which adds to a total score, that will later calculate 
+ * a member's proposed insurance rate.
  */
 
 	public int familyDiseaseScore(String disease)
 	{
-		if (disease.contentEquals("diabetes"))
-		{
-			return 10;
-		}
-		if (disease.contentEquals("cancer"))
+		if (disease.contentEquals("y"))
 		{
 			return 10;
 		}
@@ -161,17 +182,51 @@ public int bloodPressureScore(String score, int BPSys, int BPDias)
 			return 10;
 		}
 	}
+	
+	/**
+	 * @name calcRiskLevel
+	 * This method is the overall scores that can be achieved when adding all other parameters
+	 * (blood pressure, family disease, BMI, and age.
+	 * @param points is an INT that represents the points of all other parameters
+	 * @return low risk, moderate risk, high risk, or uninsurable. These strings 
+	 * represent if you can get insured or not!
+	 */
+	
+	public String calcRiskLevel(int points)
+	{
+		if (points <= 20)
+		{
+			return "low risk";
+		}
+		else if (points <=50)
+		{
+			return "moderate risk";
+		}
+		else if (points <= 75)
+		{
+			return "high risk";
+		}
+		else
+			return "uninsurable";
+	}
 
 /**
- * 	
- * @param mem
- * @return
+ * @name assessMember
+ * This method will tally all of the parameters in calculating a risk level. Then, a new InsuranceScore will be 
+ * output to an ArrayList called allScores, which will be called when the program assesses a member.
+ * @param members is an ArrayList of the object Member (from our Member class). This is needed for outputting
+ * a new assesMember object with their calculated risk level.
+ * @return ArrayList<InsuranceScore> this object returns a new insurance score 
  */
 	
-//public ArrayList<InsuranceScore> assessMember(Member mem)
-public int assessMember(Member mem)
-{
-	String total = "0";
+public ArrayList<InsuranceScore> assessMember(ArrayList<Member> members)
+	{
+	ArrayList<InsuranceScore> allScores = new ArrayList<InsuranceScore>();
+	
+	for (Member mem:members)
+	{
+	String name= mem.getLastname() +", " + mem.getFirstname();
+	int total = 0;
 	int age = mem.getAge();
 	int weight = mem.getWeight();
 	int height = mem.getHeight();
@@ -180,11 +235,14 @@ public int assessMember(Member mem)
 	String cancer = mem.getCancer();
 	String alzheimers = mem.getAlzheimers();
 	String diabetes = mem.getDiabetes();
-	ArrayList<InsuranceScore> allScores = new ArrayList<InsuranceScore>();
-	
-	//int  average = (int)total / iScore.size();
-	//String letter = familyDiseaseScore(average) + bloodPressureScore(average);
-	return age;
-}
+	total = ageScore(age) + bmiScore(calcBmiScore(height, weight)) + bloodPressureScore(BPSyst, BPDias) + familyDiseaseScore(cancer) 
+	+ familyDiseaseScore(diabetes) + familyDiseaseScore(alzheimers);
+	String riskLevel = calcRiskLevel(total);
+	InsuranceScore memberScore = new InsuranceScore(name, total, riskLevel);
+	allScores.add(memberScore);
+	}
+
+	return allScores;
+	}
 
 }
