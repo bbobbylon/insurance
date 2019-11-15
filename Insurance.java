@@ -61,6 +61,7 @@ public class Insurance {
 		System.out.print("Enter name of member file: ");
 		String fname = sc.nextLine();
 		ArrayList<Member> members= MemberReader.readMembersFromTextFile(fname);
+		ArrayList<InsuranceScore> scores= new ArrayList<InsuranceScore>();
 		int choice;
 		do {
 			showMenu();
@@ -87,7 +88,7 @@ public class Insurance {
 				System.out.print("Enter blood pressure (sys and dia): ");
 				int bpsys= sc.nextInt();
 				int bpdia= sc.nextInt();
-				System.out.print("Has a family memeber had ... ");
+				System.out.print("Has a family memeber had ... \n");
 				System.out.print("Cancer? ");
 				String cancer= sc.next();
 				System.out.print("Diabetes? ");
@@ -101,9 +102,20 @@ public class Insurance {
 			}else if (choice == 4) {
 				
 			}else if (choice == 5) {
+				scores= Assessor.assessMember(members);
+				System.out.println();
+				System.out.println("Here are the insurance assessments: ");
+				for(InsuranceScore score: scores) {
+					score.printScores();
+				}
+				System.out.println();
+				System.out.println();
 				
 			}else if (choice == 6) {
-				
+				System.out.println("Enter the name of the JSON file: ");
+				sc.next();
+				MemberWriter mjson = new MemberWriter();
+		        mjson.writeMembersToJSON("members.jsn", scores);
 			}
 			
 		} while(choice!= 7);
