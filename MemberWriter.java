@@ -3,40 +3,34 @@
  * Like text, xml, json and binary.
  */
 import java.beans.XMLEncoder;
-import java.io.*;
-import java.util.ArrayList;
-import org.json.simple.*;
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+	import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+	import java.util.ArrayList;
 
+	import org.json.simple.*;
 public class MemberWriter {
 
-
-	/**
-	 * This class takes in each member and prints it out in a neat format
-	 * @author Colin
-	 * @param mem The member that is being printed
-	 */
-	
-	public static void getMembersAsString(Member mem) {
-		System.out.println(mem.getLastname() + ", " + mem.getFirstname());
-		System.out.println("Age            " + mem.getAge());
-		System.out.println("Height         " + mem.getHeight());
-		System.out.println("Weight        " + mem.getWeight());
-		System.out.println("BP Syst       " + mem.getBPSyst());
-		System.out.println("BP Dias        " + mem.getBPDias());
-		System.out.println("Cancer          " + mem.getCancer());
-		System.out.println("Diabetes        " + mem.getDiabetes());
-		System.out.println("Alzheimers      " + mem.getAlzheimers());
-		System.out.println("-----------------------");
-	}
+	    public static void writeMembersToScreen(ArrayList<Member> members) {
+	        for (Member mem : members) {
+	            System.out.println(mem);
+	        }
+	    }
 	    /**
 	     * @author Nicolas Gomez
 	     * @param fname its basically the file we are trying to get to
 	     * @param members are basically the objects we are trying to write in fname.
 	     * @return string in text style form
 	     */
-	     public static boolean writeMembersToTextFile(String fname, ArrayList<Member> members) {
-	    	 try {
-	                PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File(fname))));
+	     public static boolean writeMembersToTextFile(String fname, 
+	        ArrayList<Member> members) {
+	            try {
+	                PrintWriter pw = new PrintWriter(new BufferedWriter(
+	                    new FileWriter(new File("member.txt"))));
 	                for (Member mem: members) {
 	                    pw.println(mem);
 	                }
@@ -46,27 +40,51 @@ public class MemberWriter {
 	                return false;
 	            }
 	        }
+	     public static void getMembersAsString(Member mem) {
+
+	 		System.out.println(mem.getLastname() + ", " + mem.getFirstname());
+
+	 		System.out.println("Age            " + mem.getAge());
+
+	 		System.out.println("Height         " + mem.getHeight());
+
+	 		System.out.println("Weight        " + mem.getWeight());
+
+	 		System.out.println("BP Syst       " + mem.getBPSyst());
+
+	 		System.out.println("BP Dias        " + mem.getBPDias());
+
+	 		System.out.println("Cancer          " + mem.getCancer());
+
+	 		System.out.println("Diabetes        " + mem.getDiabetes());
+
+	 		System.out.println("Alzheimers      " + mem.getAlzheimers());
+
+	 		System.out.println("-----------------------");
+
+	 	}
 	     /**
 	      * @author Nicolas Gomez
 	      * @param fname is a string that contains our file
 	      * @param members are the people in our file
 	      * @return a string in JSON form
 	      */
-	     public static boolean writeScoresToJSON(String fname, ArrayList<InsuranceScore> scores) {
+	     public boolean writeMembersToJSON(String fname, ArrayList<InsuranceScore> scores) {
 	         try {
-	             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File(fname))));
+	             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new
+	                         File(fname))));
 	             JSONArray array = new JSONArray();
-	             JSONObject scoreObj;
-	             for (InsuranceScore score : scores) {
-	                 scoreObj = new JSONObject();
-	                 scoreObj.put("Name: ", score.getName());
-	                 scoreObj.put("Score", score.getTotalScore());
-	                 scoreObj.put("Verdict", score.getRiskLevel());
-	                 array.add(scoreObj);
+	             JSONObject memObj;
+	             for (InsuranceScore score: scores) {
+	                 memObj = new JSONObject();
+	                 memObj.put("Name: ", score.getName());
+	                 memObj.put("Score",  score.getTotalScore());
+	                 memObj.put("Verdict", score.getRiskLevel());
+	                 array.add(memObj);
 	             }
-	             JSONObject allScores = new JSONObject();
-	             allScores.put("members",array);
-	             pw.println(allScores.toJSONString());
+	             JSONObject allMembers = new JSONObject();
+	             allMembers.put("members",array);
+	             pw.println(allMembers.toJSONString());
 	             pw.close();
 	             return true;
 	         } catch (Exception ex) {
@@ -81,9 +99,9 @@ public class MemberWriter {
 	      */
 	     public static boolean writeMembersToBinary(String fname, ArrayList<Member> members) {
 	    	 try {
-	    		 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fname));
-	    		 oos.writeObject(members);
-	    		 oos.close();
+	    		 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("members.bin"));
+	             oos.writeObject(members);
+	             oos.close();
 	    		 return true;
 	    	 }catch (Exception ex) {
 	    		 return false;
@@ -97,7 +115,7 @@ public class MemberWriter {
 	      */
 	     public static boolean writeMembersToXML(String fname, ArrayList<Member> members) {
 		    	try {
-		    		XMLEncoder enc = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(fname)));
+		    		XMLEncoder enc = new XMLEncoder(new BufferedOutputStream(new FileOutputStream("members.xml")));
 		    		enc.writeObject(members);
 		    		enc.close();
 		    		return true;
