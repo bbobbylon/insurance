@@ -14,12 +14,6 @@ import java.io.PrintWriter;
 
 	import org.json.simple.*;
 public class MemberWriter {
-
-	    public static void writeMembersToScreen(ArrayList<Member> members) {
-	        for (Member mem : members) {
-	            System.out.println(mem);
-	        }
-	    }
 	    /**
 	     * @author Nicolas Gomez
 	     * @param fname its basically the file we are trying to get to
@@ -30,7 +24,7 @@ public class MemberWriter {
 	        ArrayList<Member> members) {
 	            try {
 	                PrintWriter pw = new PrintWriter(new BufferedWriter(
-	                    new FileWriter(new File("member.txt"))));
+	                    new FileWriter(new File("members.txt"))));
 	                for (Member mem: members) {
 	                    pw.println(mem);
 	                }
@@ -70,7 +64,7 @@ public class MemberWriter {
 	      * @return a string in JSON form
 	      */
 	     public boolean writeMembersToJSON(String fname, ArrayList<InsuranceScore> scores) {
-	         try {
+	    	 try {
 	             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new
 	                         File(fname))));
 	             JSONArray array = new JSONArray();
@@ -98,8 +92,9 @@ public class MemberWriter {
 	      * @return a new file in binary form
 	      */
 	     public static boolean writeMembersToBinary(String fname, ArrayList<Member> members) {
+	    	 ObjectOutputStream oos;
 	    	 try {
-	    		 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("members.bin"));
+	    		 oos = new ObjectOutputStream(new FileOutputStream("members.bin"));
 	             oos.writeObject(members);
 	             oos.close();
 	    		 return true;
