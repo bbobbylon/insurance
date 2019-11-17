@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+
+
 /**
  * @author Robert
  * This class is used for 
@@ -15,38 +17,71 @@ import java.util.ArrayList;
 *
 *
 */
+
 		
+
 public class InsuranceScore {
-	private static int score;
-	private static String name;
-	private static String riskLevel;
+
+	private int score;
+
+	private String name;
+
+	private String riskLevel;
+
 	
 
+
+
 	public String getName()
+
 	{
+
 		return name;
+
 	}
+
 	public void setName(String sName)
+
 	{
+
 		this.name= sName;
+
 	}
+
 	public String getRiskLevel()
+
 	{
+
 		return riskLevel;
+
 	}
+
 	public void setRiskLevel(String sRiskLevel)
+
 	{
+
 		this.riskLevel= sRiskLevel;
+
 	}
+
 	public int getTotalScore()
+
 	{
+
 		return score;
+
 	}
+
 	public void setTotalScore(int sTotalScore)
+
 	{
+
 		this.score = sTotalScore;
+
 	}
+
 	
+
 /**
  * @author Robert
  * This constructor method named InsuranceScore
@@ -58,17 +93,35 @@ public class InsuranceScore {
  * 
  * 
  */
-InsuranceScore()
+
+public InsuranceScore()
+
 {
+
 	name = " ";
+
 	score = 0;
+
 	riskLevel =" ";
+
 	
+
 }
-InsuranceScore(String name, int score, String riskLevel)
+
+public InsuranceScore(String name, int score, String riskLevel)
+
 {
+
 	setName(name);
+
 	setTotalScore(score);
+
 	setRiskLevel(riskLevel);
+
+}
+
+@Override
+public String toString() {
+	return String.format("Name: %29s %nScore: %28s %nVerdict: %26s %n", name, score, riskLevel);
 }
 }

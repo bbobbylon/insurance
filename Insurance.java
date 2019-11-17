@@ -1,7 +1,8 @@
 import java.util.*;
 
 /**
- * 
+ * This is an application that takes in a text file of people with their basic physical information and performs different tasks
+ * with this information based on a user controlled menu.
  * @author Nico
  *
  */
@@ -61,6 +62,7 @@ public class Insurance {
 		System.out.print("Enter name of member file: ");
 		String fname = sc.nextLine();
 		ArrayList<Member> members= MemberReader.readMembersFromTextFile(fname);
+		ArrayList<InsuranceScore> scores = new ArrayList<InsuranceScore>();
 		int choice;
 		do {
 			showMenu();
@@ -69,8 +71,9 @@ public class Insurance {
 			if (choice == 1) {
 				System.out.println("Here are the members: \n");
 				for (Member mem: members) {
-					Member.getMembersAsString(mem);
+					MemberWriter.getMembersAsString(mem);
 				}
+				System.out.println("\n");
 			}else if (choice == 2) {
 				System.out.print("Enter first and last name: ");
 				sc.nextLine();
@@ -87,7 +90,7 @@ public class Insurance {
 				System.out.print("Enter blood pressure (sys and dia): ");
 				int bpsys= sc.nextInt();
 				int bpdia= sc.nextInt();
-				System.out.print("Has a family memeber had ... ");
+				System.out.println("Has a family memeber had ... ");
 				System.out.print("Cancer? ");
 				String cancer= sc.next();
 				System.out.print("Diabetes? ");
@@ -96,14 +99,75 @@ public class Insurance {
 				String alzheimers= sc.next();
 				Member mem = new Member(firstname, lastname, age, height, weight, bpsys, bpdia, cancer, diabetes, alzheimers);
 				members.add(mem);
+				System.out.println("The new member has been added.\n");
 			}else if (choice == 3) {
-				
+				System.out.print("(T)ext, (B)inary, or (X)ML? ");
+				String file = sc.next();
+				System.out.print("Enter the name of the output file: ");
+				fname = sc.next();
+				if (file.equals("T")) {
+					if (MemberWriter.writeMembersToTextFile(fname, members)) {
+						System.out.println("\nMembers were written successfully.\n");
+					}
+					else {
+						System.out.println("\nSomething went wrong.\n");
+					}
+				}
+				else if (file.equals("B")) {
+					if (MemberWriter.writeMembersToBinary(fname, members)) {
+						System.out.println("\nMembers were written successfully.\n");
+					}
+					else {
+						System.out.println("\nSomething went wrong.\n");
+					}
+				}
+				else if (file.equals("X")) {
+					if (MemberWriter.writeMembersToXML(fname, members)) {
+						System.out.println("\nMembers were written successfully.\n");
+					}
+					else {
+						System.out.println("\nSomething went wrong.\n");
+					}
+				}
+				else {
+					System.out.println("\nInvalid input.\n");
+				}
 			}else if (choice == 4) {
-				
+				System.out.print("(T)ext, (B)inary, or (X)ML? ");
+				String file = sc.next();
+				System.out.print("Enter the name of the input file: ");
+				fname = sc.next();
+				if (file.equals("T")) {
+					members = MemberReader.readMembersFromTextFile(fname);
+					System.out.println("\n" + members.size() + " members were read.\n");
+				}
+				else if (file.equals("B")) {
+					members = MemberReader.readMembersFromBinary(fname);
+					System.out.println("\n" + members.size() + " members were read.\n");
+				}
+				else if (file.equals("X")) {
+					members = MemberReader.readMembersFromXML(fname);
+					System.out.println("\n" + members.size() + " members were read.\n");
+				}
+				else {
+					System.out.println("\nInvalid input.\n");
+				}
 			}else if (choice == 5) {
-				
+				scores = Assessor.assessMembers(members);
+				System.out.println("\nHere are the insurance assessments:");
+				for (InsuranceScore score: scores) {
+					System.out.println(score);
+				}
+				System.out.println();
 			}else if (choice == 6) {
-				
+				System.out.print("Enter name of JSON file: ");
+				fname = sc.next();
+				if (MemberWriter.writeScoresToJSON(fname, scores)) {
+					System.out.println("\nThe scores were written successfully.\n");
+				}
+				else {
+					System.out.println("Something went wrong.");
+				}
 			}
 			
 		} while(choice!= 7);

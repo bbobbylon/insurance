@@ -149,21 +149,11 @@ public class Member {
 	}
 	
 	/**
-	 * This class takes in each member and prints it out in a neat format
+	 * This overrides the toString function to print out the members in a certain format.
 	 * @author Colin
-	 * @param mem The member that is being printed
 	 */
-	
-	public static void getMembersAsString(Member mem) {
-		System.out.println(mem.getLastname() + ", " + mem.getFirstname());
-		System.out.println("Age            " + mem.getAge());
-		System.out.println("Height         " + mem.getHeight());
-		System.out.println("Weight        " + mem.getWeight());
-		System.out.println("BP Syst       " + mem.getBPSyst());
-		System.out.println("BP Dias        " + mem.getBPDias());
-		System.out.println("Cancer          " + mem.getCancer());
-		System.out.println("Diabetes        " + mem.getDiabetes());
-		System.out.println("Alzheimers      " + mem.getAlzheimers());
-		System.out.println("-----------------------");
-	}
+@Override
+public String toString() {
+	return String.format("%s %s %d %d %d %d %d %s %s %s", firstname, lastname, age, height, weight, BPSyst, BPDias, cancer, diabetes, alzheimers);
+}
 }
