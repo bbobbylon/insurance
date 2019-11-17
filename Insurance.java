@@ -55,26 +55,32 @@ public class Insurance {
 
 	private static void printWelcome() {
 
-		printStars(50);
+		printStars(40);
 
 		System.out.println("	INSURANCE SCORE CARD	");
 
-		System.out.println("This app scores a potential customer\r\n" + 
+		System.out.println("  This app scores a potential customer\r\n" + 
 
-				"on various health attributes: blood\r\n" + 
+				"  on various health attributes: blood\r\n" + 
 
-				"pressure, age, height, weight, and\r\n" + 
+				"  pressure, age, height, weight, and\r\n" + 
 
-				"family history of disease. It writes\r\n" + 
+				"  family history of disease. It writes\r\n" + 
 
-				"each member's insurance grade to a\r\n" + 
+				"  each member's insurance grade to a\r\n" + 
 
-				"JSON file so that they can be easily\r\n" + 
+				"  JSON file so that they can be easily\r\n" + 
 
-				"shared on a web-based data exchange.");
+				"  shared on a web-based data exchange.");
 
-		printStars(50);
+		printStars(40);
 
+	}
+	public static void Goodbye() {
+		printStars(40);
+		System.out.println("	INSURANCE SCORE CARD	");
+		System.out.println("	    THANK YOU			");
+		printStars(40);
 	}
 
 	/**
@@ -126,6 +132,11 @@ public class Insurance {
 		String fname = sc.nextLine();
 
 		ArrayList<Member> members= MemberReader.readMembersFromTextFile(fname);
+		if (members == null) {
+            System.out.println("No students were read.");
+        } else {
+        	System.out.println("\n" + members.size() + " members were read.\n");
+        }
 
 		ArrayList<InsuranceScore> scores = new ArrayList<InsuranceScore>();
 
@@ -321,15 +332,28 @@ public class Insurance {
 				System.out.println();
 
 			}else if (choice == 6) {
-				System.out.println("Enter the name of JSON file: ");
-				for(InsuranceScore scores1: scores) {
-					MemberWriter mem = new MemberWriter();
-					mem.writeMembersToJSON("members.jsn", scores);
+				System.out.print("Enter the name of the JSON file: ");
+				String file = sc.next();
+				for (InsuranceScore score: scores) {
+					MemberWriter sjson = new MemberWriter();
+					sjson.writeMembersToJSON("members.jsn", scores); 
+			    }
+				System.out.println("\nThe scores were writen successfully\n");
+				
 				}
-			}
-		}while (choice != 7);
+
+			
+			}while (choice != 7);
+			System.out.println(" ");
+			Goodbye();
 	}
+	
 }
+
+	
+
+
+
 
 		
 
