@@ -6,8 +6,10 @@ import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 	import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 	import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class MemberWriter {
 	        ArrayList<Member> members) {
 	            try {
 	                PrintWriter pw = new PrintWriter(new BufferedWriter(
-	                    new FileWriter(new File("members.txt"))));
+	                    new FileWriter(new File(fname))));
 	                for (Member mem: members) {
 	                    pw.println(mem);
 	                }
@@ -91,17 +93,23 @@ public class MemberWriter {
 	      * @param members the people
 	      * @return a new file in binary form
 	      */
-	     public static boolean writeMembersToBinary(String fname, ArrayList<Member> members) {
-	    	 ObjectOutputStream oos;
-	    	 try {
-	    		 oos = new ObjectOutputStream(new FileOutputStream("members.bin"));
-	             oos.writeObject(members);
-	             oos.close();
-	    		 return true;
-	    	 }catch (Exception ex) {
-	    		 return false;
-	    	 }
-	    }
+	     public static boolean writeMembersToBinary(String fname, ArrayList<Member>members) {
+
+	 		try {
+
+	 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fname));
+				oos.writeObject(members);
+	 			oos.close();
+
+	 			return true;
+
+	 		} catch (Exception ex) {
+
+	 			return false;
+
+	 		}
+
+	 	}
 	     /**
 	      * @author nicolas gomez
 	      * @param fname String that contains our file info
@@ -110,7 +118,7 @@ public class MemberWriter {
 	      */
 	     public static boolean writeMembersToXML(String fname, ArrayList<Member> members) {
 		    	try {
-		    		XMLEncoder enc = new XMLEncoder(new BufferedOutputStream(new FileOutputStream("members.xml")));
+		    		XMLEncoder enc = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(fname)));
 		    		enc.writeObject(members);
 		    		enc.close();
 		    		return true;
