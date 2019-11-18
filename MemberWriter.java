@@ -42,9 +42,9 @@ public class MemberWriter {
 
 	 		System.out.println("Age            " + mem.getAge());
 
-	 		System.out.println("Height         " + mem.getHeight());
+	 		System.out.println("Height         " + mem.getHeight() + "in");
 
-	 		System.out.println("Weight        " + mem.getWeight());
+	 		System.out.println("Weight        " + mem.getWeight() + "lbs");
 
 	 		System.out.println("BP Syst       " + mem.getBPSyst());
 
