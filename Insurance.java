@@ -290,14 +290,14 @@ public class Insurance {
 
 				if (file.equals("T")) {
 
-					MemberReader.readMembersFromTextFile("members.txt");
+					MemberReader.readMembersFromTextFile(fname);
 					System.out.println("\n" + members.size() + " members were read.\n");
 
 				}
 
 				else if (file.equals("B")) {
 
-					members = MemberReader.readMembersFromBinary("members.bin");
+					members = MemberReader.readMembersFromBinary(fname);
 
 					System.out.println("\n" + members.size() + " members were read.\n");
 
@@ -305,7 +305,7 @@ public class Insurance {
 
 				else if (file.equals("X")) {
 
-					members = MemberReader.readMembersFromXML("members.xml");
+					members = MemberReader.readMembersFromXML(fname);
 
 					System.out.println("\n" + members.size() + " members were read.\n");
 
@@ -336,7 +336,7 @@ public class Insurance {
 				String file = sc.next();
 				for (InsuranceScore score: scores) {
 					MemberWriter sjson = new MemberWriter();
-					sjson.writeMembersToJSON("members.jsn", scores); 
+					sjson.writeMembersToJSON(file, scores); 
 			    }
 				System.out.println("\nThe scores were writen successfully\n");
 				
@@ -351,11 +351,6 @@ public class Insurance {
 }
 
 	
-
-
-
-
-		
 
 
 
