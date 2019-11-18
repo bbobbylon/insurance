@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 /**
  * This class creates a Member object that has characteristics read from the text file.
  * There are also numerous classes that will help exchange these information between
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  *
  */
 
-public class Member {
+public class Member implements Serializable {
 	private String firstname;
 	private String lastname;
 	private int age;
